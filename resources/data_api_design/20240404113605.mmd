@@ -1,0 +1,21 @@
+
+classDiagram
+    class App {
+        +StreamlitUI ui
+        +WeatherAPI weather_api
+        +LocationDetector location_detector
+        +run() void
+    }
+    class StreamlitUI {
+        +display_location_options(locations: list)
+        +display_weather_info(weather_info: dict)
+    }
+    class WeatherAPI {
+        +get_weather(location: str) dict
+    }
+    class LocationDetector {
+        +get_nearby_locations() list
+    }
+    App --> StreamlitUI
+    App --> WeatherAPI
+    App --> LocationDetector

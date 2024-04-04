@@ -1,0 +1,15 @@
+
+sequenceDiagram
+    participant A as App
+    participant UI as StreamlitUI
+    participant WAPI as WeatherAPI
+    participant LD as LocationDetector
+    A->>LD: get_nearby_locations()
+    LD-->>A: return locations
+    A->>UI: display_location_options(locations)
+    loop Select Location
+        UI->>A: selected_location
+    end
+    A->>WAPI: get_weather(selected_location)
+    WAPI-->>A: return weather_info
+    A->>UI: display_weather_info(weather_info)
