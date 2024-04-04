@@ -26,7 +26,8 @@ class StreamlitUI:
 class App:
     def __init__(self):
         self.ui = StreamlitUI()
-        self.weather_api = WeatherAPI()
+        self.api_key = os.getenv('OPENWEATHERMAP_API_KEY')
+        self.weather_api = WeatherAPI(self.api_key)
         self.location_detector = LocationDetector()
 
     def run(self):
@@ -44,21 +45,3 @@ class App:
 if __name__ == "__main__":
     app = App()
     app.run()
-
-## weather_api.py
-import requests
-import os
-
-class WeatherAPI:
-    def get_weather(self, location: str):
-        api_key = os.getenv('OPENWEATHERMAP_API_KEY')
-        if not api_key:
-            print("API key for OpenWeatherMap is not set.")
-            return {}
-        try:
-            response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}")
-            response.raise_for_status()  # Raises an HTTPError if the response status code is 4XX/5XX
-            return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching weather data: {e}")
-            return {}
